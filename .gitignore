@@ -1,0 +1,81 @@
+# --- OS cruft ---
+.DS_Store
+Thumbs.db
+
+# --- Editors / IDEs ---
+.vscode/*
+!.vscode/extensions.json        # keep extension recommendations only
+.idea/
+*.iml
+.vs/
+*.code-workspace
+
+# --- Node / JS toolchain (LWC tooling, Jest, etc.) ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+.parcel-cache/
+.nyc_output/
+coverage/
+.jest-cache/
+jest-stare/
+*.tsbuildinfo
+.turbo/
+.cache/
+dist/
+build/
+out/
+tmp/
+temp/
+
+# --- Salesforce DX / Local Dev ---
+.sfdx/
+.sf/
+.localdevserver/
+**/mdapi_output_dir/**
+**/mdapipkg/**
+*.dup
+
+# --- Python (for local scripts/utilities) ---
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+.eggs/
+.poetry/
+
+# --- Local databases (do NOT commit dev DBs) ---
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# If you keep sample DBs for docs or demos, un-ignore a known path:
+# !/seed/sample.sqlite3
+
+# --- Env / secrets ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.crt
+
+# --- Logs & backups ---
+*.log
+logs/
+*.bak
+*.orig
+*.swp
+*~
+
+*.db2
