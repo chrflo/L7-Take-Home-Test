@@ -37,6 +37,7 @@ docker compose up --build
 You’ll build a service that lets tenants manage flags and segments, and **evaluate a flag** for a specific (user, context) with rules and percentage rollouts. Provide JWT/token auth, tenant isolation, auditing of changes, and a fast in-memory evaluation path with caching.
 
 See the full brief in `docs/brief.md`.
+See a use case example in `usecase-example.md`.
 
 ---
 
