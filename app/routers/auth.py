@@ -7,5 +7,7 @@ router = APIRouter(prefix="/v1/auth", tags=["auth"])
 
 @router.post("/token", response_model=TokenResponse)
 async def token(body: TokenRequest):
-    token = issue_token(settings.jwt_secret, body.client_id, body.scopes)
-    return TokenResponse(access_token=token)
+    # Stubbed token issuer so candidates can test flows;
+    # enforcement happens in deps.require_auth (TODO).
+    tok = issue_token(settings.jwt_secret, body.client_id, body.scopes)
+    return TokenResponse(access_token=tok)
