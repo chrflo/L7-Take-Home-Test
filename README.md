@@ -11,8 +11,11 @@ You are expected to demonstrate **architecture & design**, **implementation exce
 ## Quick Start
 
 ```bash
+# a) Install Python version 3.11
+brew install python@3.11
 # 1) Local (no Docker) — requires Python 3.11+
-python -m venv .venv && source .venv/bin/activate
+python3.11 -m venv .venv && source .venv/bin/activate
+python -m pip install -U pip wheel
 pip install -r requirements.txt -r requirements-dev.txt
 make run      # starts the API on http://localhost:8000
 make seed     # loads sample data
