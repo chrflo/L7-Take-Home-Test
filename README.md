@@ -40,16 +40,68 @@ See the full brief in `docs/brief.md`.
 
 ---
 
-## Deliverables Checklist
+## Candidate Deliverables Checklist
 
-- [ ] Working API with must-have endpoints
-- [ ] Tests (unit + integration + at least one e2e happy path)
-- [ ] Health/readiness endpoints, structured logs, metrics
-- [ ] JWT/token auth, tenant isolation, input validation
-- [ ] Basic data model & migrations/DDL (migrations optional)
-- [ ] ADRs (1–3), risk log, stakeholder readout (templates provided)
-- [ ] CI (lint, type check, test) and one-command dev flow (`make` targets)
-- [ ] Brief “what I built / what I cut / what I’d do next” in README or `docs/`
+Use this list to self-verify your submission before sending it.
+
+## API Correctness
+- [ ] All **must-have endpoints** implemented per acceptance criteria (§2)
+- [ ] Correct status codes & error handling (400/401/403/404/409/422 as applicable)
+- [ ] Pagination documented for list endpoints (limit + offset or page_token)
+- [ ] Filtering documented (e.g., `state`, `q`)
+- [ ] Soft-delete behavior (if used) documented
+
+## Security & Tenancy
+- [ ] Protected routes require **Authorization: Bearer <JWT>**
+- [ ] JWT (HS256) signature verified; **`exp`** enforced; invalid/missing → **401**
+- [ ] (If implemented) **scopes** enforced per endpoint; insufficient → **403**
+- [ ] **X-Tenant-ID** required on all reads/writes
+- [ ] No cross-tenant leakage (include **≥1 negative test** proving isolation)
+
+## Data Model & Storage
+- [ ] SQLAlchemy models for **flags**, **segments**, **audit**
+- [ ] Unique index: **(tenant_id, key)** on flags & segments
+- [ ] Audit index: **(tenant_id, ts)**
+- [ ] Alembic migrations **or** concise SQL DDL notes included
+- [ ] Persistence choice & trade-offs documented (SQLite OK; Postgres optional via `DB_DSN`)
+
+## Evaluation Engine
+- [ ] Deterministic **bucketing** in `[0,1)` over `(tenant, flag_key, user_id)`
+- [ ] Rule matching supports: **on/off**, **attribute equals**, **percentage rollout**
+- [ ] (Encouraged) Segment membership; if omitted, **document limitation**
+- [ ] Response includes: `variant`, `reason`, optional `rule_id`, `details.bucket`
+- [ ] Weights normalized for variant distribution (need not sum to 100 in input)
+
+## Observability & Reliability
+- [ ] `/healthz` and `/readyz` present (plain-text)
+- [ ] `/metrics` exposes Prometheus metrics (at least request counter by `path,method,status`)
+- [ ] **Structured JSON logs** with: `timestamp`, `level`, `message`, `path`, `method`, `status`, `tenant`, `request_id` (if provided)
+
+## Testing
+- [ ] Unit tests: **bucketing determinism**, **rule matching**, **idempotent create**
+- [ ] Integration test: **flags/segments CRUD + evaluate** happy path
+- [ ] At least one **end-to-end** test from clean DB
+- [ ] Clear test run instructions (`pytest -q`); (optional) coverage with goal **≥ 75%** for domain/eval code
+
+## CI & DevEx
+- [ ] GitHub Actions (or equivalent) running **ruff**, **mypy**, **pytest** on push/PR
+- [ ] **Makefile** with `run`, `seed`, `test`, `ci` (Docker/compose optional but welcome)
+- [ ] One-command local setup works (document any environment variables)
+
+## Documentation
+- [ ] `README.md` or `/docs/` with local setup, run steps, design overview
+- [ ] Example requests (`requests.http` or `curl` script)
+- [ ] **“What I built / what I cut / what I’d do next”** section
+- [ ] **ADRs (1–3)** for key choices, **risk log**, **stakeholder readout** one-pager
+- [ ] If no hosted PR, include a brief **CHANGELOG** summarizing notable changes
+
+---
+
+### Optional Stretch (counts as “exceeds”)
+- [ ] `POST /v1/evaluate/preview` with rule-match explanation
+- [ ] Change events stream (SSE or webhook retrier w/ backoff & delivery tracking)
+- [ ] Minimal Python client SDK (evaluate + caching) with usage example & tests
+- [ ] Segment engine enhancements (segment caching + richer matchers) documented
 
 ---
 

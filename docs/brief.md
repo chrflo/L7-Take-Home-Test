@@ -1,4 +1,4 @@
-# Feature Flag & Experimentation Service — Full Brief
+# Feature Flag & Experimentation Service
 
 ## Starter Repo Contents (what’s provided)
 
