@@ -10,7 +10,7 @@ down:
 	docker compose down -v
 
 seed:
-	python scripts/seed.py
+	PYTHONPATH=. python -m scripts.seed
 
 lint:
 	ruff check .
