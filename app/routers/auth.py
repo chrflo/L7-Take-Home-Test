@@ -1,0 +1,11 @@
+from fastapi import APIRouter
+from app.schemas import TokenRequest, TokenResponse
+from app.config import settings
+from app.utils.security import issue_token
+
+router = APIRouter(prefix="/v1/auth", tags=["auth"])
+
+@router.post("/token", response_model=TokenResponse)
+async def token(body: TokenRequest):
+    token = issue_token(settings.jwt_secret, body.client_id, body.scopes)
+    return TokenResponse(access_token=token)
