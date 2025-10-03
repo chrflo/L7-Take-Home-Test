@@ -5,7 +5,7 @@ from app.deps import SessionLocal
 from app.models import Flag, Segment
 
 async def seed():
-    async with SessionLocal() as db:  # type: AsyncSession
+    async with SessionLocal() as db:  
         # tenant 'acme'
         exists = (await db.execute(select(Flag).where(Flag.tenant_id=="acme", Flag.key=="new_checkout"))).scalar_one_or_none()
         if not exists:
